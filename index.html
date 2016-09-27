@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO audio</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+    </style>
+  </head>
+  <body>
+    <audio id="player" controls src="/audio/audio1.mp3">
+        <source src="/audio/audio1.mp3" />
+        <source src="/audio/audio2.mp3" />
+        <source src="/audio/audio3.mp3" />
+        <source src="/audio/audio4.mp3" />
+        <source src="/audio/audio5.mp3" />
+    </audio>  
+    <button id="btn1">Comando1</button>          
+    <button id="btn2">Comando2</button>          
+    <button id="btn3">Comando3</button>          
+    <button id="btn4">Comando4</button>          
+    <button id="btn5">Comando5</button>          
+        
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+        
+    $(function() {
+        var audio = document.createElement('audio');     
+        audio.src = "/audio/audio2.mp3" ;
+        audio.play();
+        audio.pause();
+        
+        audio = document.createElement('audio');     
+        audio.src = "/audio/audio3.mp3" ;
+        audio.play();
+        audio.pause();
+        
+        audio = document.createElement('audio');     
+        audio.src = "/audio/audio4.mp3" ;
+        audio.play();
+        audio.pause();
+        
+        audio = document.createElement('audio');     
+        audio.src = "/audio/audio5.mp3" ;
+        audio.play();
+        audio.pause();
+    }); 
+        
+      var socket = io();
+      
+      $('#btn1').click(function(){
+          socket.emit('play', '/audio/audio1.mp3');
+      });    
+      $('#btn2').click(function(){
+          socket.emit('play', '/audio/audio2.mp3');
+      });    
+      $('#btn3').click(function(){
+          socket.emit('play', '/audio/audio3.mp3');
+      });    
+      $('#btn4').click(function(){
+          socket.emit('play', '/audio/audio4.mp3');
+      });    
+      $('#btn5').click(function(){
+          socket.emit('play', '/audio/audio5.mp3');
+      });    
+      
+      socket.on('play', function(data){
+        var audio = $("#player").get(0);      
+        audio.play();
+        audio.pause();  
+        
+        audio.src = data;
+        audio.play();
+      });
+    </script>
+  </body>
+</html>
